@@ -1,13 +1,27 @@
 #! /usr/bin/env python3
+'''parse JMdict japanese dictionary xml file to sqlite db file
+
+if ran fom shell as script or executable
+first argument --> input JMdict xml file path
+second argument --> sqlite db file for populating the data
+
+alaa amz 2019-06-22
+'''
 
 import xml.sax
 import sys
 import sqlite3
 import groups
-xmlfile = "/home/alaa/Downloads/JMdict"
-dbfile = 'jmdict.sqlite'
+
+#input and output files
+xmlfile = sys.argv[1]
+dbfile = sys.argv[2]
+
+#creating db connection
 con = sqlite3.connect(dbfile)
 cur = con.cursor()
+
+#getting table names and fields for each
 tables_names = cur.execute("SELECT * FROM sqlite_master WHERE type='table'")
 tables_names = [ table[1] for table in tables_names ]
 table_fields_dict = {}
@@ -17,6 +31,15 @@ for table_name in tables_names:
     table_fields_dict[table_name] = fields_list
 
 def insert_ignore_select(table_name,value):
+    '''insert value or ignore if existed and select its id for a lookup single collummed table
+
+    parametrs:-
+    table_name: the name of the table
+    valu: the value to insert and lookup
+    note:by default the value is inserted as for {table_name}.{table_name}_value
+    todo: adding fields and corresponding values tuples
+    '''
+    
     insert_ignore_query_string = f'INSERT OR IGNORE INTO {table_name}({table_name}_value) VALUES (?)'
     select_query = f'SELECT {table_name}_id from {table_name} where {table_name}_value = ?'
     cur.execute(insert_ignore_query_string,(value,))
