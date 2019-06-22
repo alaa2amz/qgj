@@ -1,0 +1,31 @@
+ent_seq
+inf
+pri
+lang
+ls_type
+ls_wasei
+g_gend
+g_type
+
+keb ent_seq
+reb ent_seq
+sense ent_seq
+
+ke_inf keb inf ent_seq 
+ke_pri keb pri ent_seq
+re_nokanji reb ent_seq
+re_restr reb keb ent_seq
+re_inf reb inf ent_seq
+re_pri reb pri ent_seq
+stagk sense keb ent_seq
+stagr sense reb ent_seq
+xref sense keb reb ent_seq
+ant sense keb reb ent_seq
+pos sense inf ent_seq
+field sense inf ent_seq
+misc sense inf ent_seq
+lsource sense lang ls_type ls_wasei ent_seq
+dial sense inf ent_seq
+gloss sense pri lang g_gend g_type ent_seq 
+pri_infos sense ent_seq
+s_inf sense ent_seq

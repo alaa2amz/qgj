@@ -1,0 +1,34 @@
+file_version
+database_version
+date_of_creation
+
+literal
+cp_type
+rad_type
+var_type
+dr_type
+qc_type
+r_type
+m_lang
+skip_misclass_type
+tag
+
+skip_misclass skip_misclass_type q_code literal
+m_page dic_ref literal
+m_vol dic_ref literal
+rmgroup literal
+
+cp_value literal cp_type
+rad_value literal rad_type
+grade literal
+stroke_count literal
+variant literal var_type
+freq literal
+rad_name literal
+jlpt literal
+dic_ref literal dr_type
+q_code literal qc_type
+reading literal rmgroup r_type on_type r_status
+meaning literal rmgroup m_lang
+nanori literal
+literal_tag literal tag
