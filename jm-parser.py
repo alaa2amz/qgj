@@ -74,54 +74,49 @@ class JmdictHandler(xml.sax.ContentHandler):
         if name in tables_names and name != 'sense':
             self.fields = []
             self.values = []
-            print('name: ',name,' attrs: ',dict(self.tag_attr_dict[name]),' content: ',self.tag_content_dict[name])
-            #input('---')
             
             for field in table_fields_dict[name][1:]:
+
+                #todo: replacing find not equal -1 with in
+                #todo: the last 3 cars of which must be set to equal _id
                 if field.find('_id') != -1 and field[:-3] in self.tag_register_dict:
                     self.fields.append(field)
                     self.values.append(str(self.tag_register_dict[field[:-3]]))
-                ###
-                print('fffff---->',self.tag_register_dict)
-                print('rrrrr----',field,dict(self.tag_attr_dict[name]))
-                #input('ll')
+
+                #todo and last 3 chars must be equal _id
                 if field[:-3] in self.tag_attr_dict[name] or 'xml:'+field[:-3] in self.tag_attr_dict[name]:
+
                     if field.find('lang') != -1  :
                         self.key = 'xml:'+field[:-3]
+
                     else:
                         self.key = field[:-3]
-                    print('rrrrr----',field[:-3],self.tag_attr_dict[name][self.key])
+                    
                     self.id = insert_ignore_select(field[:-3],self.tag_attr_dict[name][self.key])
-                    print(self.id)
-                    #input()
                     self.fields.append(field)
                     self.values.append(self.id)
-                if field.find('_value') != -1 and( name not in groups.value_as_lookup):
-                    #input('vvvv')
+
+                if field.find('_value') != -1 and (name not in groups.value_as_lookup):
                     self.fields.append(field)
                     self.values.append(str(self.tag_content_dict[name]))
-                if field.find('inf_id') != -1 and( name in groups.value_as_lookup):
+
+                if field.find('inf_id') != -1 and (name in groups.value_as_lookup):
                     self.infid = insert_ignore_select('inf',str(self.tag_content_dict[name]))
                     self.fields.append(field)
                     self.values.append(self.infid)
-                if field.find('pri_id') != -1 and( name in groups.value_as_lookup):
+
+                if field.find('pri_id') != -1 and (name in groups.value_as_lookup):
                     self.infid = insert_ignore_select('pri',str(self.tag_content_dict[name]))
                     self.fields.append(field)
                     self.values.append(self.infid)
-                
                     
-                
-
             self.qm_list = ['?' for x in range(len(self.values))]
             self.qm_string = ','.join(self.qm_list)
             self.fields_string = ','.join(self.fields)
-            #self.values_string = ','.join(self.values)
             
-            self.q = f'insert into {name}({self.fields_string}) values ({self.qm_string})'
-            ###
-            print('qqq',self.q,self.tag_content_dict,self.values)
-            #input()
+            self.q = f'insert into {name}({self.fields_string}) values ({self.qm_string})'            
             cur.execute(self.q,tuple(self.values))
+            ###to here
             if name in ['sense','ent_seq','keb','reb']:
                 self.tag_register_dict[name] = cur.lastrowid
             self.popped_tag = self.tag_stack.pop()
