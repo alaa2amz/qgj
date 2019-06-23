@@ -1,38 +1,40 @@
 #! /usr/bin/env python3
+'''module to convert alar's schema text files to sqlite file db tables
 
+if to be ran as script or executable the arguments to be as follows
+1st ---> schema text file
+2nd ---> the name of sqlite file to be created
+todo: if 2nd argument not suppliy take it as the 1st with replacing extention
+
+alaa amz
+Sun Jun 23 10:25:37 EET 2019
+Pick another fortune cookie.
+'''
 import sqlite3
 import sys
-
-
 
 con = sqlite3.connect(sys.argv[2])
 cur = con.cursor()
 
 schema_file = open(sys.argv[1])
 table_lines = schema_file.read().splitlines()
+#clearing empty lines
 table_lines = [ x for x in table_lines if x != '' ]
-print(table_lines)
-input()
-tables_names = []
-#tables_names = [ x[0] for x in [line.split() for line in table_lines] ]
-
-for line in table_lines:
-    fields = line.split()
-    tables_names.append(fields[0])
-    
-print('llll',tables_names)
+tables_names = [ x[0] for x in [line.split() for line in table_lines] ]
 
 for table_line in table_lines:
+    #foreign keys list and normal key list
     fk = []
     nk = []
     fields_words = table_line.strip().split()
+
     for field_word in fields_words[1:]:
         if field_word in tables_names:
             fk.append(field_word)            
         else:
             nk.append(field_word)
     declared_fk = [f'{x}_id INTEGER' for x in fk]
-    declared_nk = [f'{x} VARCHAR' for x in nk]  ####
+    declared_nk = [f'{x} VARCHAR' for x in nk]
     constraint_fk = [f'FOREIGN KEY ({x}_id) REFERENCES {x} ({x}_id)' for x in fk]
     total = declared_fk + declared_nk + constraint_fk
     total_string = ','.join(total)
@@ -44,5 +46,7 @@ for table_line in table_lines:
     print(query_string)
     cur.execute(query_string)
 
+print('done')    
 con.commit()
 con.close()
+

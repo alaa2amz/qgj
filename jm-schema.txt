@@ -14,13 +14,13 @@ sense ent_seq
 ke_inf keb inf ent_seq 
 ke_pri keb pri ent_seq
 re_nokanji reb ent_seq
-re_restr reb keb ent_seq
+re_restr reb ent_seq
 re_inf reb inf ent_seq
 re_pri reb pri ent_seq
-stagk sense keb ent_seq
-stagr sense reb ent_seq
-xref sense keb reb ent_seq
-ant sense keb reb ent_seq
+stagk sense ent_seq
+stagr sense ent_seq
+xref sense ent_seq
+ant sense ent_seq
 pos sense inf ent_seq
 field sense inf ent_seq
 misc sense inf ent_seq

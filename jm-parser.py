@@ -116,13 +116,16 @@ class JmdictHandler(xml.sax.ContentHandler):
             
             self.q = f'insert into {name}({self.fields_string}) values ({self.qm_string})'            
             cur.execute(self.q,tuple(self.values))
-            ###to here
-            if name in ['sense','ent_seq','keb','reb']:
+
+            if name in ['ent_seq','keb','reb']:
                 self.tag_register_dict[name] = cur.lastrowid
+                
             self.popped_tag = self.tag_stack.pop()
+            
             if self.popped_tag == 'ent_seq':
                 self.counter += 1
                 print (self.counter,'--->',self.tag_content_dict[self.popped_tag])
+
             if self.counter > 1000:
                 con.commit()
                 con.close()
@@ -136,6 +139,7 @@ class JmdictHandler(xml.sax.ContentHandler):
     def endDocument(self):
         con.commit()
         con.close()
+        
 def parse(xmlfile=xmlfile,dbfile=dbfile):
     xml.sax.parse(xmlfile,JmdictHandler())
     

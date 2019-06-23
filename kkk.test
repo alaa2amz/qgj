@@ -1,0 +1,3 @@
+for line in table_lines:
+    fields = line.split()
+    tables_names2.append(fields[0])
