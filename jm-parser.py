@@ -61,10 +61,9 @@ class JmdictHandler(xml.sax.ContentHandler):
     def startElement(self,name,attrs):
         
         self.tag_stack.append(name)
+
         if name == 'sense':
-            #input('dddsss')
             self.q = f'insert into {name}  (ent_seq_id)  values({self.tag_register_dict["ent_seq"]})'
-            #self.q = f'insert into {name}  (ent_seq_id)  values(1)'
             cur.execute(self.q)
             self.tag_register_dict[name] = cur.lastrowid
 
