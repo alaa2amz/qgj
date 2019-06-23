@@ -13,6 +13,10 @@ m_lang
 skip_misclass_type
 tag
 
+parts
+s_parts parts
+k_parts literal parts
+
 skip_misclass skip_misclass_type q_code literal
 m_page dic_ref literal
 m_vol dic_ref literal
