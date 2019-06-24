@@ -53,7 +53,8 @@ def parse(kradfile=kradfile,db_file=db_file):
                 part_id = insert_ignore_select('parts',part)
                 q = 'insert into k_parts (literal_id,parts_id) values (?,?)'
                 cur.execute(q,(literal_id,part_id))
-                line= file.readline()
+
+            line= file.readline()
     con.commit()
     con.close()
     print('done')
