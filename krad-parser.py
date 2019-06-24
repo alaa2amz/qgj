@@ -32,29 +32,31 @@ def insert_ignore_select(table_name,value):
     return id
 
 
-con = sqlite3.connect()
-cur = con.cursor()
+
 kradfile = sys.argv[1]
 db_file = sys.argv[2]
-
+con = sqlite3.connect(db_file)
+cur = con.cursor()
 def parse(kradfile=kradfile,db_file=db_file):
     file = open(kradfile,'r')
     line = file.readline()
     while line != '':
         if line[0] == '#':
-            line = readline
+            line = file.readline()
         else:
             literal = line[0]
             parts = line[4:].strip().split()
             literal_id = insert_ignore_select('literal',literal)
+            print(literal)
             
             for part in parts:
                 part_id = insert_ignore_select('parts',part)
                 q = 'insert into k_parts (literal_id,parts_id) values (?,?)'
                 cur.execute(q,(literal_id,part_id))
+                line= file.readline()
     con.commit()
     con.close()
     print('done')
 
-if __name__ = '__main__':
+if __name__ == '__main__':
     parse()

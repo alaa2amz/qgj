@@ -1,3 +1,6 @@
 for line in table_lines:
     fields = line.split()
     tables_names2.append(fields[0])
+
+'''select literal.literal_value, meaning.meaning_value, m_lang.m_lang_value from literal join meaning on meaning.literal_id  = literal.literal_id join m_lang on meaning.m_lang_id = m_lang.m_lang_id where meaning.meaning_value like "%car%";
+'''
