@@ -3,4 +3,17 @@ for line in table_lines:
     tables_names2.append(fields[0])
 
 '''select literal.literal_value, meaning.meaning_value, m_lang.m_lang_value from literal join meaning on meaning.literal_id  = literal.literal_id join m_lang on meaning.m_lang_id = m_lang.m_lang_id where meaning.meaning_value like "%car%";
+
+select literal_value, meaning_value, reading_value from literal left join meaning on literal.literal_id = meaning.literal_id left join reading  on literal.literal_id = reading.literal_id limit 70 ;
+
+
+sqlite> select literal_value, meaning_value, reading_value,r_type_value from literal left join meaning on literal.literal_id = meaning.literal_id left join reading  on literal.literal_id = reading.literal_id join r_type on reading.r_type_id = r_type.r_type_id where r_type_value = 'ja_on' limit 70 ;
+
+
+sqlite> select literal_value,  reading_value,r_type_value from literal left join reading  on literal.literal_id = reading.literal_id join r_type on reading.r_type_id = r_type.r_type_id where r_type_value like 'ja_%' group  by r_type_value limit 70 ;
+響|ひびく|ja_kun
+頻|ヒン|ja_on
+
+
+
 '''
