@@ -83,3 +83,29 @@ select distinct parts.parts_value from parts,literal,meaning where parts.parts_v
 
 
 CREATE VIEW kmlp as select literal.literal_value as value,meaning.meaning_value as meaning , meaning.literal_id as lid ,parts.parts_id as pis from literal, meaning,parts where literal.literal_value = parts.parts_value and meaning.literal_id = literal.literal_id and meaning.m_lang_id is null
+
+
+
+
+CREATE VIEW kmlp as select literal.literal_value as value,meaning.meaning_value as meaning , meaning.literal_id as lid ,parts.parts_id as pis from literal, meaning,parts where literal.literal_value = parts.parts_value and meaning.literal_id = literal.literal_id and meaning.m_lang_id is null
+
+
+CREATE VIEW kmlp as 
+select 
+literal.literal_value as value,
+meaning.meaning_value as meaning, 
+meaning.literal_id as lid,
+parts.parts_id as pis 
+from 
+literal, meaning,parts 
+where 
+literal.literal_value = parts.parts_value 
+and 
+meaning.literal_id = literal.literal_id 
+and 
+meaning.m_lang_id is null
+
+
+
+
+select * from literal where literal.literal_id not in (select distinct meaning.literal_id from meaning) and literal.literal_id in (select distinct literal.literal_id from literal,parts where parts.parts_value = literal.literal_value)
