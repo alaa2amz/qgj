@@ -16,4 +16,54 @@ sqlite> select literal_value,  reading_value,r_type_value from literal left join
 
 
 
+
+select literal.literal_id, literal.literal_value, parts.parts_id from literal,parts where parts.parts_value = literal.literal_value limit 5;
+literal_id|literal_value|parts_id
+65|衣|39
+70|井|43
+76|一|2
+103|羽|195
+105|雨|94
+
+
+------
+select literal.literal_value,meaning.meaning_value, meaning.literal_id,parts.parts_id from literal, meaning,parts where literal.literal_value = parts.parts_value and meaning.literal_id = literal.literal_id and meaning.m_lang_id is null limit 3;
+literal_value|meaning_value|literal_id|parts_id
+衣|garment|65|39
+衣|clothes|65|39
+衣|dressing|65|39
+
+create view kmlp as select literal.literal_value as value,meaning.meaning_value as meaning , meaning.literal_id as lid ,parts.parts_id as pis from literal, meaning,parts where literal.literal_value = parts.parts_value and meaning.literal_id = literal.literal_id and meaning.m_lang_id is null;
+sqlite> 
+
+
+
+
+
+yyyyyyyyyyyyyyyyyy
+
+
+select literal.literal_value from kmlp,literal,k_parts where kmlp.pis = k_parts.parts_id and k_parts.literal_id = literal.literal_id and kmlp.meaning = "foot" limit 5 ;
+
+
+
+
+
+
+
+select literal.literal_value from kmlp,literal,k_parts where kmlp.pis = k_parts.parts_id and k_parts.literal_id = literal.literal_id and kmlp.meaning like "%rice%" INTERSECT select literal.literal_value from kmlp,literal,k_parts where kmlp.pis = k_parts.parts_id and k_parts.literal_id = literal.literal_id and kmlp.meaning = "fire"
+
+
+
+select literal.literal_value from kmlp,literal,k_parts where kmlp.pis = k_parts.parts_id and k_parts.literal_id = literal.literal_id and kmlp.meaning = "foot" INTERSECT select literal.literal_value from kmlp,literal,k_parts where kmlp.pis = k_parts.parts_id and k_parts.literal_id = literal.literal_id and kmlp.meaning = "bird" INTERSECT select literal.literal_value from kmlp,literal,k_parts where kmlp.pis = k_parts.parts_id and k_parts.literal_id = literal.literal_id and kmlp.meaning = "gate";
 '''
+"嘙"
+"翅"
+"翳"
+"聚"
+"蘙"
+"蠮"
+"鼕"
+"鼗"
+
+-最
