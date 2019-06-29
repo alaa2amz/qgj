@@ -19,6 +19,8 @@ parts = '''\
 ⻏ CJK RADICAL CITY
 マ KATAKANA LETTER MA
 ユ KATAKANA LETTER YU
+𠆢 umbrella hat
+辶 walk walking cart change 
 '''
 
 def insert_ignore_select(table_name,value):

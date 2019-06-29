@@ -1,3 +1,4 @@
+fff kkkk gggg
 http://ftp.monash.edu.au/pub/nihongo/kanjidic2_ov.html
 http://ftp.monash.edu.au/pub/nihongo/kanjidic2_dtd.gz
 http://ftp.monash.edu.au/pub/nihongo/kanjidic2_xsd.gz
@@ -7,6 +8,8 @@ http://ftp.monash.edu.au/pub/nihongo/kradzip.zip
 http://ftp.monash.edu.au/pub/nihongo/kraddate
 http://ftp.monash.edu.au/pub/nihongo/kradfile-u.gz
 http://ftp.monash.edu.au/pub/nihongo/kradfile-u-hdr
+http://ftp.monash.edu.au/pub/nihongo/radkintro
+http://ftp.monash.edu.au/pub/nihongo/kradintro
 
 http://ftp.monash.edu.au/pub/nihongo/edict_doc.html
 http://ftp.monash.edu.au/pub/nihongo/jmdict_proj_desc.html
@@ -14,9 +17,13 @@ http://ftp.monash.edu.au/pub/nihongo/JMdict.gz
 http://ftp.monash.edu.au/pub/nihongo/JMdict.dtd
 
 http://ftp.monash.edu.au/pub/nihongo/JMnedict.xml.gz
-http://ftp.monash.edu.au/pub/nihongo/enamdict_doc.html
+
 
 http://ftp.monash.edu.au/pub/nihongo/kanjidic_comb_utf8.gz
+http://ftp.monash.edu.au/pub/nihongo/edict2u.gz
 
-http://ftp.monash.edu.au/pub/nihongo/edict_doc.html
-http://ftp.monash.edu.au/pub/nihongo/jmdict_proj_desc.html
+http://ftp.monash.edu.au/pub/nihongo/enamdict.gz
+http://ftp.monash.edu.au/pub/nihongo/enamdicthdr.txt
+http://ftp.monash.edu.au/pub/nihongo/enamdictx.gz
+http://ftp.monash.edu.au/pub/nihongo/enamdict_doc.html
+http://ftp.monash.edu.au/pub/nihongo/enamdict_doc.txt
