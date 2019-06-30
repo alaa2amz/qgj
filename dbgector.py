@@ -35,8 +35,8 @@ def dbgect(field_id,value):
                     where_list.append(table_name+'.'+field+'='+field[:-3]+'.'+field)
             
             q = f'select {",".join(select_list)} from {",".join(from_list)} where {" and ".join(where_list)}'
-            print('-> q= ',q)
-            print(table_name,field_id,value,'7777')
+            
+            
             r=cur.execute(q,(value,))
             results[table_name]=[tuple(headrs_list)]+r.fetchall()
             #ch = type('Character',(object,),results)
@@ -49,6 +49,7 @@ def dbgect(field_id,value):
     return ch
 
 if __name__ == '__main__':
-    t=[dbgect('literal_id',x) for x in range(1000,1050)]
-    import pprint
-    [pprint.pprint(x) for x in t]
+    import random
+    t=[dbgect('literal_id',random.randrange(13109)) for x in range(5)]
+    
+    [print(x) for x in t]
