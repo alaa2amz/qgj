@@ -15,7 +15,7 @@ con.create_function('REGEXP',2,_regexp)
 def wamk(args=sys.argv):
     '''where are my kanjies'''
     # q = 'select literal.literal_value from kmlp,literal,k_parts where kmlp.pis = k_parts.parts_id and k_parts.literal_id = literal.literal_id and kmlp.meaning REGEXP ?'
-    q = '''select literal.literal_value 
+    q = '''select literal.* 
     from literal,k_parts
     where literal.literal_id = k_parts.literal_id 
     and k_parts.parts_id in
@@ -23,7 +23,7 @@ def wamk(args=sys.argv):
     from literal, meaning,parts 
     where literal.literal_value = parts.parts_value 
     and meaning.literal_id = literal.literal_id 
-    and meaning.m_lang_id is null
+    and meaning.m_lang_id = 1
     and meaning.meaning_value REGEXP ?)
     
     '''
@@ -38,8 +38,10 @@ def wamk(args=sys.argv):
         else:
             kanji_set = kanji_set.intersection(ro)
             kanji_list = [x[0] for x in kanji_set]
-    print(kanji_list)
+    return kanji_list
 
 if __name__ == '__main__':
-    wamk()
+    import dbgector
+    d=wamk()
+    [print(dbgector.dbgect('literal_id',x)) for x in d]
     
