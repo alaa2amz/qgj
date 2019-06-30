@@ -36,3 +36,23 @@ reading literal rmgroup r_type on_type r_status
 meaning literal rmgroup m_lang
 nanori literal
 literal_tag literal tag
+
+
+
+-------------
+q = '''select literal.literal_value 
+    from literal,k_parts,stroke_count
+    where literal.literal_id = k_parts.literal_id 
+    and k_parts.parts_id in
+    (select parts.parts_id as pid 
+    from literal, meaning,parts 
+    where literal.literal_value = parts.parts_value 
+    and meaning.literal_id = literal.literal_id 
+    and meaning.m_lang_id is null
+    and meaning.meaning_value REGEXP ?) 
+
+    and literal.literal_id = stroke_count.literal_id    
+    order by stroke_count.stroke_count_value
+
+    '''
+    
