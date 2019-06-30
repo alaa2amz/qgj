@@ -44,7 +44,7 @@ def dbgect(field_id,value):
                 def __init__(self,results):
                     self.__dict__.update(results)
                 def __repr__(self):
-                    return '%r--%s' % (self.literal[1][1],'|'.join(str(x) for x in self.meaning[1:][1]))
+                    return '%r--%s' % (self.literal[1][1],'|'.join(str(x[1]) for x in self.meaning[1:]))
             ch=Ch(results)
     return ch
 
