@@ -23,18 +23,22 @@ def dbgect(field_id,value):
     results = {}
     for table_name in tables_names:
         if field_id in table_fields_dict[table_name]:
+            headrs_list=table_fields_dict[table_name]
+            select_list=[table_name+'.*']
             from_list=[table_name]
-            where_dict[field_id]=value#####
+            where_list=[table_name+'.'+field_id+'=?']
             for field in table_fields_dict[table_name]:
-                if field[-3:]=='_id' and field != field_id\
-                and field[:-3] in tables_names:
+                if field[-3:]=='_id' and field not in [field_id,table_name+'_id'] and field[:-3] in tables_names:
+                    headrs_list.append(field[:-3]+'_value')
+                    select_list.append(field[:-3]+'_value')
                     from_list.append(field[:-3])
-                    where_dict[table_name+'.'+field]=field[:-3]+'.'+field###
-            where_list = [
-            q = f'select * from {"."join(from_list)} where {} = ?'
+                    where_list.append(table_name+'.'+field+'='+field[:-3]+'.'+field)
+            
+            q = f'select {",".join(select_list)} from {",".join(from_list)} where {" and ".join(where_list)}'
+            print('-> q= ',q)
             print(table_name,field_id,value,'7777')
             r=cur.execute(q,(value,))
-            results[table_name]=[tuple(table_fields_dict[table_name])]+r.fetchall()
+            results[table_name]=[tuple(headrs_list)]+r.fetchall()
     return results
 
 if __name__ == '__main__':
