@@ -44,11 +44,11 @@ def dbgect(field_id,value):
                 def __init__(self,results):
                     self.__dict__.update(results)
                 def __repr__(self):
-                    return '%r--%s' % (self.literal[1][1],'|'.join(str(x[1]) for x in self.meaning[1:]))
+                    return '%r--%s' % (self.literal[1][1],'|'.join(str(x[1]) for x in self.meaning[1:] if x[-1]=='en'))
             ch=Ch(results)
     return ch
 
 if __name__ == '__main__':
-    t=dbgect('literal_id',16)
+    t=[dbgect('literal_id',x) for x in range(1000,1050)]
     import pprint
-    pprint.pprint(t)
+    [pprint.pprint(x) for x in t]

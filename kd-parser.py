@@ -49,7 +49,8 @@ class KanjiDicHandler(xml.sax.ContentHandler):
             self.tag_register_dict[name] = cur.lastrowid
 
         self.tag_content_dict[name] = ''
-        self.tag_attr_dict[name] = attrs
+        #en -- dict
+        self.tag_attr_dict[name] =dict( attrs)
 
     def endElement(self,name):
 
@@ -67,7 +68,9 @@ class KanjiDicHandler(xml.sax.ContentHandler):
                 if field.find('_id') != -1 and field[:-3] in self.tag_register_dict:
                     self.fields.append(field)
                     self.values.append(str(self.tag_register_dict[field[:-3]]))
-                
+                if field[:-3] not in self.tag_attr_dict[name] and field == 'm_lang_id' and name=='meaning':
+                    #input('fff')
+                    self.tag_attr_dict[name][field[:-3]]= 'en'
                 if field[:-3] in self.tag_attr_dict[name] and field[-3:] == '_id':
                     self.key = field[:-3]
                     self.id = insert_ignore_select(field[:-3],self.tag_attr_dict[name][self.key])
