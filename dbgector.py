@@ -39,7 +39,14 @@ def dbgect(field_id,value):
             print(table_name,field_id,value,'7777')
             r=cur.execute(q,(value,))
             results[table_name]=[tuple(headrs_list)]+r.fetchall()
-    return results
+            #ch = type('Character',(object,),results)
+            class Ch():
+                def __init__(self,results):
+                    self.__dict__.update(results)
+                def __repr__(self):
+                    return '%r--%s' % (self.literal[1][1],'|'.join(str(x) for x in self.meaning[1:][1]))
+            ch=Ch(results)
+    return ch
 
 if __name__ == '__main__':
     t=dbgect('literal_id',16)
