@@ -43,5 +43,12 @@ def wamk(args=sys.argv):
 if __name__ == '__main__':
     import dbgector
     d=wamk()
-    [print(dbgector.dbgect('literal_id',x)) for x in d]
-    
+    e=[dbgector.dbgect('literal_id',x) for x in d]
+    f=sorted(e,key= lambda x:int(x.stroke_count[1][1]))
+    [print(s) for s in f]
+    from datetime import datetime as dt
+    log_file = open('qgj-log.txt','a')
+    log_file.write(dt.utcnow().isoformat()+' ')
+    log_file.write(' '.join(sys.argv)+'\n')
+    [print(s,file=log_file) for s in f]
+    log_file.flush()

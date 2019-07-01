@@ -40,8 +40,8 @@ def insert_12_parts_literals(parts=parts,db_file=db_file):
     for line in parts_lines:
         part_list = line.split(maxsplit=1)
         id = insert_ignore_select('literal',part_list[0])
-        q = 'insert into meaning (literal_id,meaning_value) values (?,?)'
-        cur.execute(q,(id,part_list[-1]))
+        q = 'insert into meaning (literal_id,meaning_value,m_lang_id) values (?,?,?)'
+        cur.execute(q,(id,part_list[-1],1))
         print(id,part_list)
     con.commit()
     con.close()

@@ -44,7 +44,11 @@ def dbgect(field_id,value):
                 def __init__(self,results):
                     self.__dict__.update(results)
                 def __repr__(self):
-                    return '%r--%s' % (self.literal[1][1],'|'.join(str(x[1]) for x in self.meaning[1:] if x[-1]=='en'))
+                    return '|-> %s -- %s -- %s' % (
+                    self.literal[1][1],
+                    '|'.join(str(x[1]) for x in self.reading[1:] if 'ja_' in x[-1]),
+                    '|'.join(str(x[1]) for x in self.meaning[1:] if x[-1]=='en'),
+                    )
             ch=Ch(results)
     return ch
 
