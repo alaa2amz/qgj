@@ -47,7 +47,7 @@ def parse(kradfile=kradfile,db_file=db_file):
             literal = line[0]
             parts = line[4:].strip().split()
             literal_id = insert_ignore_select('literal',literal)
-            print(literal)
+            print(literal,'\r',end='')
             
             for part in parts:
                 part_id = insert_ignore_select('parts',part)
@@ -60,4 +60,6 @@ def parse(kradfile=kradfile,db_file=db_file):
     print('done')
 
 if __name__ == '__main__':
+    print(f'start parsing{sys.argv[1]}')
     parse()
+    print('done parsing')

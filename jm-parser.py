@@ -124,13 +124,14 @@ class JmdictHandler(xml.sax.ContentHandler):
             
             if self.popped_tag == 'ent_seq':
                 self.counter += 1
-                print (self.counter,'--->',self.tag_content_dict[self.popped_tag])
+                print (self.counter,'--->',self.tag_content_dict[self.popped_tag],'\r',end='')
 
-            if self.counter > 1000:
+                ''' 
+if self.counter > 1000 :
                 con.commit()
                 con.close()
                 exit()
-
+                '''
     def characters(self,content):
         if content  not in [' ','\n']:
             self.tag = self.tag_stack[-1]
@@ -146,4 +147,6 @@ def parse(xmlfile=xmlfile,dbfile=dbfile):
 
 
 if __name__ == '__main__':
+    print('start parsing')
     parse()
+    print('done')

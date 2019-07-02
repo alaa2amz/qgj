@@ -106,7 +106,7 @@ class KanjiDicHandler(xml.sax.ContentHandler):
             self.popped_tag = self.tag_stack.pop()
             if self.popped_tag == 'literal':
                 self.counter += 1
-                print(self.counter,'-->',self.tag_content_dict[name])
+                print(self.counter,'-->',self.tag_content_dict[name],'\r',end='')
             '''if self.counter > 1000:
                 con.commit()
                 con.close()
@@ -126,4 +126,6 @@ def parse(xmlfile=xmlfile,dbfile=dbfile):
 
 
 if __name__ == '__main__':
+    print('start parsing')
     parse()
+    print('done parsing')
