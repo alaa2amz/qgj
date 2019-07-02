@@ -1,5 +1,5 @@
 #! /bin/bash
-db_name="kd3.db"
+db_name="kd4.db"
 kd_xml="sources/kanjidic2.xml"
 kd_schema="kd-schema.txt"
 krad1="sources/kradfile_utf8"
@@ -17,7 +17,7 @@ fi
 ./krad-parser.py "$krad2" "$db_name"
 ./insert-12-parts-into-literal.py  "$db_name"
 ./replace-holders.py "$db_name"
-././krad-parser.py "$krad213" "$db_name"
+./krad-parser.py "$krad213" "$db_name"
 
 
 

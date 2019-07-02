@@ -83,6 +83,11 @@ class JmdictHandler(xml.sax.ContentHandler):
                     self.fields.append(field)
                     self.values.append(str(self.tag_register_dict[field[:-3]]))
 
+                #akk
+                if field.find('_id') != -1 and field[:-3] not in self.tag_register_dict and field[:-3] not in self.tag_attr_dict[name] and 'xml:'+field[:-3] not in self.tag_attr_dict[name]:
+                    self.id = insert_ignore_select(field[:-3],'n.a' )
+                    self.fields.append(field)
+                    self.values.append(self.id)
                 #todo and last 3 chars must be equal _id
                 if field[:-3] in self.tag_attr_dict[name] or 'xml:'+field[:-3] in self.tag_attr_dict[name]:
 
@@ -91,8 +96,8 @@ class JmdictHandler(xml.sax.ContentHandler):
 
                     else:
                         self.key = field[:-3]
-                    
-                    self.id = insert_ignore_select(field[:-3],self.tag_attr_dict[name][self.key])
+                    ####print('-->>>',name,self.key,self.tag_attr_dict[name][self.key])
+                    self.id = insert_ignore_select(field[:-3],self.tag_attr_dict[name][self.key] )
                     self.fields.append(field)
                     self.values.append(self.id)
 
@@ -126,12 +131,12 @@ class JmdictHandler(xml.sax.ContentHandler):
                 self.counter += 1
                 print (self.counter,'--->',self.tag_content_dict[self.popped_tag],'\r',end='')
 
-                ''' 
-if self.counter > 1000 :
+                
+            if self.counter > 1000 :
                 con.commit()
                 con.close()
                 exit()
-                '''
+                
     def characters(self,content):
         if content  not in [' ','\n']:
             self.tag = self.tag_stack[-1]
