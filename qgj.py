@@ -2,7 +2,7 @@
 
 import sys
 import sqlite3
-db_name = 'kd3.db'
+db_name = 'kd4.db'
 con = sqlite3.connect(db_name)
 cur = con.cursor()
 
