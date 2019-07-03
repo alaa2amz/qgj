@@ -84,7 +84,12 @@ class JmdictHandler(xml.sax.ContentHandler):
                     self.values.append(str(self.tag_register_dict[field[:-3]]))
 
                 #akk
-                if field.find('_id') != -1 and field[:-3] not in self.tag_register_dict and field[:-3] not in self.tag_attr_dict[name] and 'xml:'+field[:-3] not in self.tag_attr_dict[name]:
+                if field.find('_id') != -1 \
+                and field[:-3] not in self.tag_register_dict \
+                and field[:-3] not in self.tag_attr_dict[name] \
+                and 'xml:'+field[:-3] not in self.tag_attr_dict[name] \
+                and not (name in groups.value_as_lookup):
+                   ##### print(f'field-> {field} in table {name} into akk')
                     self.id = insert_ignore_select(field[:-3],'n.a' )
                     self.fields.append(field)
                     self.values.append(self.id)
@@ -93,6 +98,12 @@ class JmdictHandler(xml.sax.ContentHandler):
 
                     if field.find('lang') != -1  :
                         self.key = 'xml:'+field[:-3]
+                        ###
+                        #print(name,self.key,
+                        #      self.tag_attr_dict[name][self.key],
+                        #      self.tag_content_dict['ent_seq'],
+                        #      self.tag_content_dict['gloss'],sep='-->>')
+                        #input()
 
                     else:
                         self.key = field[:-3]
@@ -138,7 +149,7 @@ class JmdictHandler(xml.sax.ContentHandler):
                 exit()
                 
     def characters(self,content):
-        if content  not in [' ','\n']:
+        if content  not in ['','\n']:
             self.tag = self.tag_stack[-1]
             self.tag_content_dict[self.tag] += content
 
