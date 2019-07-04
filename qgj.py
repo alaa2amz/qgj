@@ -38,12 +38,12 @@ def wamk(args=sys.argv):
         else:
             kanji_set = kanji_set.intersection(ro)
             kanji_list = [x[0] for x in kanji_set]
-    return kanji_list
+    return kanji_set
 
 if __name__ == '__main__':
     import dbgector
     d=wamk()
-    e=[dbgector.dbgect('literal_id',x) for x in d]
+    e=[dbgector.dbgect('literal_id',x[0]) for x in d]
     f=sorted(e,key= lambda x:int(x.stroke_count[1][1]))
     [print(s) for s in f]
     from datetime import datetime as dt

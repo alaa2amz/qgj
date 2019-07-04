@@ -149,9 +149,12 @@ class JmdictHandler(xml.sax.ContentHandler):
                 exit()
                 
     def characters(self,content):
-        if content  not in ['','\n']:
+        if content  not in ['\n']:
             self.tag = self.tag_stack[-1]
-            self.tag_content_dict[self.tag] += content
+            if self.tag.find('pos') != -1 or self.tag.find('inf')!=-1:
+                print (self.tag,content,sep='-oo->')
+                #input()
+            self.tag_content_dict[self.tag] += xml.sax.saxutils.unescape(content)
 
     def endDocument(self):
         con.commit()
