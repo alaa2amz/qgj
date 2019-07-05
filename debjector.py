@@ -49,7 +49,7 @@ def dbgect(field_id,value):
                     self.ent_seq[1][1],
                     '|'.join(str(x[1]) for x in self.keb[1:] ),
                     '|'.join(str(x[1]) for x in self.reb[1:] ),
-                    '|'.join(str(x[1]) for x in self.gloss[1:] if x[4] ==1 ),
+                    '|'.join(str(x[1]) for x in self.gloss[1:] if x[3] ==1 ),
                     )
             ch=Ch(results)
     return ch

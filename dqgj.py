@@ -10,6 +10,17 @@ import qgj
 #import dbgect
 import debjector
 import sys
+import sqlite3
+import re
+
+con = sqlite3.connect('jm4.db')
+cur = con.cursor
+
+def _regexp(pattern,input_string):
+    import re
+    pa = result = re.compile(pattern)
+    return pa.search(input_string) is not None
+con.create_function('REGEXP',2,_regexp)
 
 def dqgj(argv=sys.argv):
     all_srgs_string = ' '.join(argv[1:])
@@ -29,7 +40,11 @@ def dqgj(argv=sys.argv):
         p_list.append('['+"".join(g)+']')
         ps=''.join(p_list)
     print(ps)
-
+    q = 'select * from keb where keb_value REGEXP ?'
+    r_set = con.execute(q,('^'+ps+'$',))
+    return list(r_set)
 
 if __name__ == '__main__':
-    dqgj()
+    r = dqgj()
+    print(r)
+    [print(debjector.dbgect('ent_seq_id',x[2])) for x in r]
