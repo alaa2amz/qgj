@@ -25,21 +25,22 @@ def wamk(args=sys.argv):
     and meaning.literal_id = literal.literal_id 
     and meaning.m_lang_id = 1
     and meaning.meaning_value REGEXP ?)
-    
     '''
     kanji_set = set()
+    kanji_list = []
     for arg in args:
         
         arg=r'\b'+arg+r'\b'
         ro=cur.execute(q,(arg,))
         ro=set(ro)
+                
         if len(ro) == 0 or len(kanji_set) == 0:
             kanji_set = kanji_set.union(ro)
         else:
             kanji_set = kanji_set.intersection(ro)
-            kanji_list = [x[0] for x in kanji_set]
-        print('uuu',kanji_set)
-        return kanji_set
+    kanji_list = [x for x in kanji_set]
+        #print('uuu',kanji_list)
+    return kanji_list
 
 if __name__ == '__main__':
     import dbgector

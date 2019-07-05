@@ -21,8 +21,14 @@ def dqgj(argv=sys.argv):
     print(k_list)
     p_list = []
     print(p_list)
-    p_list= ['|'.join(x[1]) for tupley  in p_list for x in tupley ]
-    print(p_list)
+    #p_list= ['|'.join(x[1]) for tupley  in p_list for x in tupley ]
+    for li in k_list:
+        g=[]
+        for tu in li:
+            g.append(tu[1])
+        p_list.append('['+"".join(g)+']')
+        ps=''.join(p_list)
+    print(ps)
 
 
 if __name__ == '__main__':

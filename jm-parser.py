@@ -142,12 +142,12 @@ class JmdictHandler(xml.sax.ContentHandler):
                 self.counter += 1
                 print (self.counter,'--->',self.tag_content_dict[self.popped_tag],'\r',end='')
 
-                
+            '''    
             if self.counter > 1000 :
                 con.commit()
                 con.close()
                 exit()
-                
+            '''    
     def characters(self,content):
         if content  not in ['\n']:
             self.tag = self.tag_stack[-1]
