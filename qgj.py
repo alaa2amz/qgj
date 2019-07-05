@@ -38,7 +38,8 @@ def wamk(args=sys.argv):
         else:
             kanji_set = kanji_set.intersection(ro)
             kanji_list = [x[0] for x in kanji_set]
-    return kanji_set
+        print('uuu',kanji_set)
+        return kanji_set
 
 if __name__ == '__main__':
     import dbgector

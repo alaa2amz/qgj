@@ -20,9 +20,8 @@ def dqgj(argv=sys.argv):
     [ k_list.append(qgj.wamk(args=x)) for x in words_list]
     print(k_list)
     p_list = []
-    p_list= [list(x) for x in k_list]
     print(p_list)
-    p_list= ['|'.join(x[1]) for x  in [y for y in p_list]]
+    p_list= ['|'.join(x[1]) for tupley  in p_list for x in tupley ]
     print(p_list)
 
 
