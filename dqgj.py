@@ -42,6 +42,7 @@ def dqgj(argv=sys.argv):
     print(ps)
     q = 'select * from keb where keb_value REGEXP ?'
     r_set = con.execute(q,('^'+ps+'$',))
+
     return list(r_set)
 
 if __name__ == '__main__':
