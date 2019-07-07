@@ -5,17 +5,15 @@ class ExEntry():
     def __init__(self,results):
                     self.__dict__.update(results)
     def __repr__(self):
-        return [x for x in self.__dict__.keys()]
+        pass
+        #return [x for x in self.__dict__.keys()]
             
     def __str__(self):
-        self.__str =''
+        self.__li=[]
+        self.__str =[]
         for x,y in self.__dict__.items():
-            self.__str+=x+'\n'
-            for t in y:
-                for i in t:
-                    self.__str+=str(i)
-                self.__str+='\n'
-        return self.__str
+            self.__str.append(x)
+        return str(self.__str)
 
 
 
