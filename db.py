@@ -2,22 +2,24 @@
 import sqlite3
 
 class ExEntry():
-    def __init__(self,results):
+    def __init__(self,results,field_id):
                     self.__dict__.update(results)
+                    self.__field_id = field_id
+
     def __repr__(self):
-        pass
+        return repr(self.__dict__[self.__field_id[:-3]][1])
         #return [x for x in self.__dict__.keys()]
-            
+        
     def __str__(self):
-        self.__li=[]
-        self.__str =[]
+        return self.__repr__()
+    
+    def headers(self):
+        self.__headers={}
+        self.__fields=[]
         for x,y in self.__dict__.items():
-            self.__str.append(x)
-        return str(self.__str)
-
-
-
-
+             if x[0] !='_': self.__headers[x]=y[0]
+        return self.__headers
+    
 class Db():
     def __init__(self,dbfile):
         self.dbfile = dbfile
@@ -76,17 +78,19 @@ class Db():
                 self.__query_set = self.cur.execute(self.__query,(value,))
                 self.__results[_table_name] = [tuple(self.__headrs_list)]+self.__query_set.fetchall()
                 #ch = type('Character',(object,),results)
-                self.__exentry=ExEntry(self.__results)
+                self.__exentry=ExEntry(self.__results,field_id)
         return self.__exentry
 
     
     
 if __name__ == '__main__':
     import sys
+    from pprint import pprint
     db_file = sys.argv[1]
     field_id = sys.argv[2]
     value = sys.argv[3]
     db1 = Db(db_file)
     my_dbject = db1.dbject(field_id,value)
+    pprint(my_dbject.headers())
     print(my_dbject)
-    my_dbject
+    
