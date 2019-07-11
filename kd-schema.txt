@@ -36,3 +36,4 @@ reading literal rmgroup r_type on_type r_status
 meaning literal rmgroup m_lang
 nanori literal
 literal_tag literal tag
+kpt literal pt__literal

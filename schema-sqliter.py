@@ -30,13 +30,13 @@ def main(schema_file = schema_file,db_file=db_file):
         fields_words = table_line.strip().split()
 
         for field_word in fields_words[1:]:
-            if field_word in tables_names:
+            if any(i in tables_names for i in [field_word,field_word.split('__')[-1]]) :
                 fk.append(field_word)            
             else:
                 nk.append(field_word)
         declared_fk = [f'{x}_id INTEGER' for x in fk]
         declared_nk = [f'{x} VARCHAR' for x in nk]
-        constraint_fk = [f'FOREIGN KEY ({x}_id) REFERENCES {x} ({x}_id)' for x in fk]
+        constraint_fk = [f'FOREIGN KEY ({x}_id) REFERENCES {x.split("__")[-1]} ({x.split("__")[-1]}_id)' for x in fk]
         total = declared_fk + declared_nk + constraint_fk
         total_string = ','.join(total)
         if len(total_string) > 1:
