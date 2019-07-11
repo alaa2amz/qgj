@@ -63,6 +63,7 @@ def dbgect(field_id,value):
                 )
         ch=Ch(results)
     del table_name
+    print(counter)
     return ch
 
 if __name__ == '__main__':
