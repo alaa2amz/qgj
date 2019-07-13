@@ -1,0 +1,120 @@
+[with]
+select * from meaning natural join literal natural join m_lang where meaning_value like "%pig%";
+
+select * from reading natural join literal natural join meaning natural join literal natural join m_lang where meaning_value like "%pig%";
+
+select * from reading natural join r_type natural join literal natural join meaning natural join literal natural join m_lang where meaning_value like "%pig%" and m_lang_value="en";
+
+select * from reading natural join r_type natural join literal natural join meaning natural join m_lang where meaning_value like "%pig%" and m_lang_value="en";
+
+select * from reading natural join r_type natural join literal natural join meaning natural join m_lang natural join stroke_count where meaning_value like "%pig%" and m_lang_value="en" and r_type_value = "ja_kun";
+
+select * from reading natural join r_type natural join literal natural join meaning natural join m_lang natural join stroke_count where meaning_value like "%pig%" and m_lang_value="en" and r_type_value in ("ja_kun","ja_on");
+
+select * from reading natural join r_type natural join literal natural join meaning natural join m_lang natural join stroke_count natural join q_code natural join q_code natural join qc_type where meaning_value like "%pig%" and m_lang_value="en" and r_type_value in ("ja_kun","ja_on") and qc_type_value="skip";
+
+select * from reading natural join r_type natural join literal natural join meaning natural join m_lang natural join stroke_count natural join q_code natural join q_code natural join qc_type where meaning_value like "%pig%" and m_lang_value="en" and r_type_value in ("ja_kun","ja_on") and qc_type_value="skip" group by literal_id;
+
+select * from reading natural join r_type natural join literal natural join meaning natural join m_lang natural join stroke_count natural join q_code natural join q_code natural join qc_type where meaning_value like "%pig%" and m_lang_value="en" and r_type_value in ("ja_kun","ja_on") and qc_type_value="skip" group by literal_id having q_code_value like "2-%";
+
+real 0.261 user 0.247429 sys 0.004951
+sqlite> select * from reading natural join r_type natural join literal natural join meaning natural join m_lang natural join stroke_count natural join q_code natural join q_code natural join qc_type where literal_id=7777 and m_lang_value="en" and r_type_value in ("ja_kun","ja_on") and qc_type_value="skip" ;
+
+select * from literal natural left join reading natural join r_type  natural join meaning natural join m_lang natural join stroke_count natural join q_code natural join q_code natural join qc_type natural left join grade where literal_id=7776 and m_lang_value="en" and r_type_value in ("ja_kun","ja_on") and qc_type_value="skip" ;
+
+
+insert into kpt(literal_id,pt_literal_id) select k_parts.literal_id, literal.literal_id from k_parts,literal,parts where k_parts.parts_id =parts.parts_id and literal.literal_value = parts.parts_value;
+
+
+
+SELECT a.literal_value,c.literal_value from kpt b
+JOIN literal a ON b.literal_id=a.literal_id
+JOIN literal c ON b.pt__literal_id=c.literal_id;
+
+
+select  count(distinct literal_id) ,count(distinct pt__literal_id) from kpt
+
+select  kanji , group_concat(part) from kanji_part group by kanji
+
+select literal_value,group_concat(distinct rad_value_value), group_concat(distinct reading_value),group_concat(distinct meaning_value) from literal NATURAL join rad_value NATURAL left join reading NATURAL left join meaning where m_lang_id = 1 and r_type_id in (5,6) group by literal_value order by random() limit 10;
+
+select *,"->", count(distinct rad_value_value) from literal NATURAL join rad_value group by literal_id  limit 4;
+
+select *,"->", count(distinct rad_value_value) from literal NATURAL join rad_value group by literal_id  having count(rad_value_value)=2 limit 4;
+
+select literal_value from kanji_by_part_meaning where meaning_value like "%heart%" INTERSECT select literal_value from kanji_by_part_meaning where meaning_value like "%woman%"
+
+
+
+
+
+
+select literal_value,group_concat(DISTINCT cp_type_value),group_concat(DISTINCT cp_value_value) ,group_concat(DISTINCT rad_type_value),group_concat(DISTINCT rad_value_value)from literal NATURAL join cp_value natural join cp_type NATURAL join rad_value NATURAL join rad_type group by literal_id limit 7;
+
+
+
+
+select literal_value,
+group_concat(DISTINCT cp_type_value),
+group_concat(DISTINCT cp_value_value) ,
+group_concat(DISTINCT rad_type_value),
+group_concat(DISTINCT rad_value_value),
+"grade",
+grade_value,
+"SC",
+group_concat(distinct stroke_count_value),
+"VAR",
+group_concat(distinct var_type_value),
+group_concat(distinct variant_value),
+"FREQ",
+freq_value
+from literal 
+NATURAL join cp_value 
+natural join cp_type 
+NATURAL join rad_value 
+NATURAL join rad_type 
+natural left join grade
+natural join stroke_count
+natural left join variant
+natural join var_type
+natural left join freq
+
+group by literal_id 
+limit 20;
+
+
+
+
+
+
+
+
+
+
+select literal_value,
+group_concat(DISTINCT cp_type_value),
+group_concat(DISTINCT cp_value_value) ,
+group_concat(DISTINCT rad_type_value),
+group_concat(DISTINCT rad_value_value),
+"grade",
+grade_value,
+"SC",
+group_concat(distinct stroke_count_value),
+"VAR",
+group_concat(distinct var_type_value),
+group_concat(distinct variant_value),
+"FREQ",
+freq_value
+from literal 
+NATURAL join cp_value 
+natural join cp_type 
+NATURAL join rad_value 
+NATURAL join rad_type 
+natural left join grade
+natural join stroke_count
+natural left join variant
+natural join var_type
+natural left join freq
+
+group by literal_id 
+order by random() limit 5;
