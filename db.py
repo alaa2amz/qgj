@@ -19,11 +19,21 @@ class ExEntry():
         for x,y in self.__dict__.items():
              if x[0] !='_': self.__headers[x]=y[0]
         return self.__headers
+
+#----------------------------------------------------------------------#
     
 class Db():
+
+    def __regexp(pattern,input_string):
+        import re
+        pattern = re.compile(pattern)
+        return pattern.search(input_string) is not None
+
+
     def __init__(self,dbfile):
         self.dbfile = dbfile
         self.con = sqlite3.connect(dbfile)
+        con.create_function('REGEXP',2,__regexp)
         self.cur = self.con.cursor()
 
     def db(self,dbfile):

@@ -15,7 +15,7 @@ con.create_function('REGEXP',2,_regexp)
 def wamk(args=sys.argv):
     '''where are my kanjies'''
     # q = 'select literal.literal_value from kmlp,literal,k_parts where kmlp.pis = k_parts.parts_id and k_parts.literal_id = literal.literal_id and kmlp.meaning REGEXP ?'
-    q = '''select literal.* 
+    q2 = '''select literal.* 
     from literal,k_parts
     where literal.literal_id = k_parts.literal_id 
     and k_parts.parts_id in
@@ -26,6 +26,11 @@ def wamk(args=sys.argv):
     and meaning.m_lang_id = 1
     and meaning.meaning_value REGEXP ?)
     '''
+    q='''
+    select literal_id,literal_value from kanji_by_part_meaning where meaning_value REGEXP ?
+
+    '''
+    print(q)
     kanji_set = set()
     kanji_list = []
     for arg in args:
@@ -45,12 +50,13 @@ def wamk(args=sys.argv):
 if __name__ == '__main__':
     import dbgector
     d=wamk()
-    e=[dbgector.dbgect('literal_id',x[0]) for x in d]
-    f=sorted(e,key= lambda x:int(x.stroke_count[1][1]))
-    [print(s) for s in f]
-    from datetime import datetime as dt
-    log_file = open('qgj-log.txt','a')
-    log_file.write(dt.utcnow().isoformat()+' ')
-    log_file.write(' '.join(sys.argv)+'\n')
-    [print(s,file=log_file) for s in f]
-    log_file.flush()
+    #e=[dbgector.dbgect('literal_id',x[0]) for x in d]
+    #f=sorted(e,key= lambda x:int(x.stroke_count[1][1]))
+    #[print(s) for s in f]
+    #from datetime import datetime as dt
+    #log_file = open('qgj-log.txt','a')
+    #log_file.write(dt.utcnow().isoformat()+' ')
+    #log_file.write(' '.join(sys.argv)+'\n')
+    #[print(s,file=log_file) for s in f]
+    #log_file.flush()
+    print(d)
