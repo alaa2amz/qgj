@@ -20,6 +20,23 @@ class ExEntry():
              if x[0] !='_': self.__headers[x]=y[0]
         return self.__headers
 
+    def brief(self,field_list,primary_separator=' -- ',secondary_separator='|'):
+        self.__final_string_list = []
+        self.__key_index_dict = {}
+        self.__restrict_dict = {}
+
+        for field in field_list:
+            for key,value in self.headers().items():
+                for index,f in enumerate(value):
+                    if f in [field.split(':')[0],field.split(':')[0]+'_value']:
+                        self.__key_index_dict[key]=index
+                        self.__restrict_dict[key]=field.split(':')[-1]
+        
+        for k,v in self.__key_index_dict.items():
+            self.__s=secondary_separator.join([x[v] for x in self.__dict__[k][1:] if self.__restrict_dict[k] in list(x)+['',None]])
+            self.__final_string_list.append(self.__s)
+        return primary_separator.join(self.__final_string_list)
+
 #----------------------------------------------------------------------#
     
 class Db():
@@ -33,7 +50,7 @@ class Db():
     def __init__(self,dbfile):
         self.dbfile = dbfile
         self.con = sqlite3.connect(dbfile)
-        con.create_function('REGEXP',2,__regexp)
+        self.con.create_function('REGEXP',2,self.__regexp)
         self.cur = self.con.cursor()
 
     def db(self,dbfile):
