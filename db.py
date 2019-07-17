@@ -20,22 +20,25 @@ class ExEntry():
              if x[0] !='_': self.__headers[x]=y[0]
         return self.__headers
 
-    def brief(self,field_list,primary_separator=' -- ',secondary_separator='|'):
+    def brief(self,primary_separator=' -- ',secondary_separator='|',**karg):
         self.__final_string_list = []
         self.__key_index_dict = {}
         self.__restrict_dict = {}
 
-        for column_name in field_list.split(','):
-            for table_name,headers_tuple in self.headers().items():
-                if column_name in headers_tuple:
-                    self.__key_index_dict[table_name]=headers_tuple.index(column_name)
-            
-           
-        
-        for table_name,header_index in self.__key_index_dict.items():
-            self.__s=secondary_separator.join([x[header_index] for x in self.__dict__[table_name][1:] ])
-            self.__final_string_list.append(self.__s)
+        for  key_arg,argv in karg.items():
+            print(key_arg,argv,self.__dict__[key_arg][0].index(argv),sep='--')
+            self.__key_index_dict[key_arg] = self.__dict__[key_arg][0].index(argv)
+
+        for key,index in self.__key_index_dict.items():
+            self.__final_string_list.append(
+                secondary_separator.join(
+                    [x[index] for x in self.__dict__[key][1:]]
+                )
+            )
+
         return primary_separator.join(self.__final_string_list)
+        
+       
 
 #----------------------------------------------------------------------#
     
