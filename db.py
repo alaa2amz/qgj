@@ -25,15 +25,15 @@ class ExEntry():
         self.__key_index_dict = {}
         self.__restrict_dict = {}
 
-        for field in field_list:
-            for key,value in self.headers().items():
-                for index,f in enumerate(value):
-                    if f in [field.split(':')[0],field.split(':')[0]+'_value']:
-                        self.__key_index_dict[key]=index
-                        self.__restrict_dict[key]=field.split(':')[-1]
+        for column_name in field_list.split(','):
+            for table_name,headers_tuple in self.headers().items():
+                if column_name in headers_tuple:
+                    self.__key_index_dict[table_name]=headers_tuple.index(column_name)
+            
+           
         
-        for k,v in self.__key_index_dict.items():
-            self.__s=secondary_separator.join([x[v] for x in self.__dict__[k][1:] if self.__restrict_dict[k] in list(x)+['',None]])
+        for table_name,header_index in self.__key_index_dict.items():
+            self.__s=secondary_separator.join([x[header_index] for x in self.__dict__[table_name][1:] ])
             self.__final_string_list.append(self.__s)
         return primary_separator.join(self.__final_string_list)
 
