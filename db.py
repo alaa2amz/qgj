@@ -26,13 +26,18 @@ class ExEntry():
         self.__restrict_dict = {}
 
         for  key_arg,argv in karg.items():
-            print(key_arg,argv,self.__dict__[key_arg][0].index(argv),sep='--')
-            self.__key_index_dict[key_arg] = self.__dict__[key_arg][0].index(argv)
-
+            if key_arg[-2:] != '_f':
+                print(key_arg,argv,self.__dict__[key_arg][0].index(argv),sep='--')
+                self.__key_index_dict[key_arg] = self.__dict__[key_arg][0].index(argv)
+            elif key_arg[-2:] == '_f':
+                self.__restrict_dict[key_arg] = [self.__dict__[key_arg][0].index(
+                    argv.split(':')[0]
+                ) ,argv.split(':')[-1]]
+            
         for key,index in self.__key_index_dict.items():
             self.__final_string_list.append(
                 secondary_separator.join(
-                    [x[index] for x in self.__dict__[key][1:]]
+                    [x[index] for x in self.__dict__[key][1:] if x[self ]
                 )
             )
 
