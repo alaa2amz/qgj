@@ -19,7 +19,7 @@ class ExEntry():
         for x,y in self.__dict__.items():
              if x[0] !='_': self.__headers[x]=y[0]
         return self.__headers
-
+    i=  '''
     def brief(self,primary_separator=' -- ',secondary_separator='|',**karg):
         self.__final_string_list = []
         self.__key_index_dict = {}
@@ -42,7 +42,15 @@ class ExEntry():
             )
 
         return primary_separator.join(self.__final_string_list)
-        
+       '''
+    
+
+class KdExEntry(ExEntry):
+    def get_meaning(self,table,column,predicate_column='',
+                    predicate_values='',
+                    predicate_relation='in'):
+        self.__meaning_value_index = meaning[0].index('meaning_value')
+        self.__m_lang_value_index = meaning[0].index('m_lang_value')
        
 
 #----------------------------------------------------------------------#
