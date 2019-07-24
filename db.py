@@ -1,3 +1,4 @@
+#
 #! /usr/bin/env python3
 import sqlite3
 
@@ -45,13 +46,24 @@ class ExEntry():
        '''
     
 
-class KdExEntry(ExEntry):
-    def get_meaning(self,table,column,predicate_column='',
+
+    def get_predicated_column(self,table,column,predicate_column='',
                     predicate_values='',
                     predicate_relation='in'):
-        self.__meaning_value_index = meaning[0].index('meaning_value')
-        self.__m_lang_value_index = meaning[0].index('m_lang_value')
-       
+        self.__column_list = []
+        self.__column_index = self.__dict__[table][0].index(column)
+        self.__predicate_column_index = self.__dict__[table][0].index(predicate_column)
+        self.__table = self.__dict__[table][1:]
+        self.__column_list = [ x[self.__column_index] for x in \
+            self.__table if x[self.__predicate_column_index] in \
+            predicate_values ]
+        return self.__column_list
+        
+        
+        
+
+    
+        
 
 #----------------------------------------------------------------------#
     
