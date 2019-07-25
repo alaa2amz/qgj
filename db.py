@@ -1,6 +1,7 @@
 #
 #! /usr/bin/env python3
 import sqlite3
+import logging
 
 class ExEntry():
     def __init__(self,results,field_id):
@@ -9,7 +10,6 @@ class ExEntry():
 
     def __repr__(self):
         return repr(self.__dict__[self.__field_id[:-3]][1])
-        #return [x for x in self.__dict__.keys()]
         
     def __str__(self):
         return self.__repr__()
@@ -20,46 +20,53 @@ class ExEntry():
         for x,y in self.__dict__.items():
              if x[0] !='_': self.__headers[x]=y[0]
         return self.__headers
-    i=  '''
-    def brief(self,primary_separator=' -- ',secondary_separator='|',**karg):
-        self.__final_string_list = []
-        self.__key_index_dict = {}
-        self.__restrict_dict = {}
-
-        for  key_arg,argv in karg.items():
-            if key_arg[-2:] != '_f':
-                print(key_arg,argv,self.__dict__[key_arg][0].index(argv),sep='--')
-                self.__key_index_dict[key_arg] = self.__dict__[key_arg][0].index(argv)
-            elif key_arg[-2:] == '_f':
-                self.__restrict_dict[key_arg] = [self.__dict__[key_arg][0].index(
-                    argv.split(':')[0]
-                ) ,argv.split(':')[-1]]
-            
-        for key,index in self.__key_index_dict.items():
-            self.__final_string_list.append(
-                secondary_separator.join(
-                    [x[index] for x in self.__dict__[key][1:] if x[self ]
-                )
-            )
-
-        return primary_separator.join(self.__final_string_list)
-       '''
     
-
-
-    def get_predicated_column(self,table,column,predicate_column='',
+    def get_predicated_column(self,table,column,
+                    predicate_column='',
                     predicate_values='',
                     predicate_relation='in'):
+
+        #initializing predicated column array
         self.__column_list = []
-        self.__column_index = self.__dict__[table][0].index(column)
-        self.__predicate_column_index = self.__dict__[table][0].index(predicate_column)
+        
+        #getting column indexes
+        import logging
+        logging.critical(self.__dict__[table][0])
+        self.__header_raw = self.__dict__[table][0]
+        
+        self.__column_index = self.__header_raw.index(column)
+        self.__predicate_column_index = self.__header_raw.index(
+            predicate_column)
+
+        #get table and strip it's header
         self.__table = self.__dict__[table][1:]
-        self.__column_list = [ x[self.__column_index] for x in \
-            self.__table if x[self.__predicate_column_index] in \
-            predicate_values ]
+        
+        #preparing statemente for getting predicated table
+        self.__eval_string = f'''\
+        [ x[self.__column_index] for x in {self.__table} \
+        if x[self.__predicate_column_index] \
+        {predicate_relation} predicate_values ]\
+        '''
+        #eavluating and getting array of of predicated
+        #column values
+        logging.critical(self.__eval_string)
+        self.__column_list = eval(self.__eval_string,globals(),self.__dict__)
         return self.__column_list
+
+    def present(self,template):
+        self.__entries=[]
+        self.__outlists=[]
+        for x in template.splitlines():
+            self.__args=[]
+            for i,y in enumerate(x.split()):
+                self.__args.append(y.split(',') if i==3 else y)
+            logging.critical(self.__args)
+            self.__entries.append(self.__args)
+        for entry in self.__entries:
+            self.__outlists.append(self.get_predicated_column(*entry))
+        return self.__outlists
         
-        
+
         
 
     
@@ -148,4 +155,8 @@ if __name__ == '__main__':
     my_dbject = db1.dbject(field_id,value)
     pprint(my_dbject.headers())
     print(my_dbject)
-    
+    t='''\
+meaning meaning_value m_lang_value en
+reading reading_value r_type_value j_on,j_kun
+'''
+    print('----->>>>>',my_dbject.present(t))
