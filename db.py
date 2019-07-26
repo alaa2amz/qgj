@@ -24,7 +24,7 @@ class ExEntry():
     def get_predicated_column(self,table,column,
                     predicate_column='',
                     predicate_values='',
-                    predicate_relation='in'):
+                    inverse=False):
 
         #initializing predicated column array
         self.__column_list = []
@@ -35,22 +35,21 @@ class ExEntry():
         self.__header_raw = self.__dict__[table][0]
         
         self.__column_index = self.__header_raw.index(column)
-        self.__predicate_column_index = self.__header_raw.index(
+        if predicate_column != '':
+            self.__predicate_column_index = self.__header_raw.index(
             predicate_column)
 
         #get table and strip it's header
         self.__table = self.__dict__[table][1:]
         
-        #preparing statemente for getting predicated table
-        self.__eval_string = f'''\
-        [ x[self.__column_index] for x in {self.__table} \
-        if x[self.__predicate_column_index] \
-        {predicate_relation} predicate_values ]\
-        '''
-        #eavluating and getting array of of predicated
-        #column values
-        logging.critical(self.__eval_string)
-        self.__column_list = eval(self.__eval_string,globals(),self.__dict__)
+        for row in self.__table:
+            if predicate_column !='' and\
+            row[self.__predicate_column_index] in predicate_values:
+                self.__valid_value = row[self.__column_index]
+                self.__column_list.append(self.__valid_value)
+            elif predicate_column == '':
+                self.__column_list.append(row[self.__column_index])
+        
         return self.__column_list
 
     def present(self,template):
@@ -156,7 +155,10 @@ if __name__ == '__main__':
     pprint(my_dbject.headers())
     print(my_dbject)
     t='''\
+literal literal_value
 meaning meaning_value m_lang_value en
-reading reading_value r_type_value j_on,j_kun
+reading reading_value r_type_value ja_on,ja_kun
+stroke_count stroke_count_value
+grade grade_value
 '''
     print('----->>>>>',my_dbject.present(t))
