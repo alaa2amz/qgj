@@ -159,6 +159,7 @@ literal literal_value
 meaning meaning_value m_lang_value en
 reading reading_value r_type_value ja_on,ja_kun
 stroke_count stroke_count_value
+rad_value rad_value_value
 grade grade_value
 '''
     print('----->>>>>',my_dbject.present(t))
