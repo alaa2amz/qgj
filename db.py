@@ -1,4 +1,3 @@
-#
 #! /usr/bin/env python3
 import sqlite3
 import logging
@@ -30,8 +29,6 @@ class ExEntry():
         self.__column_list = []
         
         #getting column indexes
-        import logging
-        logging.critical(self.__dict__[table][0])
         self.__header_raw = self.__dict__[table][0]
         
         self.__column_index = self.__header_raw.index(column)
@@ -54,15 +51,14 @@ class ExEntry():
 
     def present(self,template):
         self.__entries=[]
-        self.__outlists=[]
+        self.__outlists={}
         for x in template.splitlines():
             self.__args=[]
             for i,y in enumerate(x.split()):
                 self.__args.append(y.split(',') if i==3 else y)
-            logging.critical(self.__args)
             self.__entries.append(self.__args)
         for entry in self.__entries:
-            self.__outlists.append(self.get_predicated_column(*entry))
+            self.__outlists[entry[0]]=self.get_predicated_column(*entry)
         return self.__outlists
         
 
@@ -152,8 +148,6 @@ if __name__ == '__main__':
     value = sys.argv[3]
     db1 = Db(db_file)
     my_dbject = db1.dbject(field_id,value)
-    pprint(my_dbject.headers())
-    print(my_dbject)
     t='''\
 literal literal_value
 meaning meaning_value m_lang_value en
